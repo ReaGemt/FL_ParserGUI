@@ -33,7 +33,7 @@ FL Parser GUI – это приложение на Python с графическ�
 
 ### Клонирование репозитория
 ```bash
-git clone https://github.com/your_username/FL_ParserGUI.git
+git clone https://github.com/ReaGemt/FL_ParserGUI.git
 cd FL_ParserGUI
 ```
 
