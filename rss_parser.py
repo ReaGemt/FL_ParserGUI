@@ -12,7 +12,7 @@ def parse_tasks():
     Парсим RSS-ленту с задачами с сайта fl.ru.
     URL берётся из переменной окружения, либо используется значение по умолчанию.
     """
-    rss_url = os.getenv('RSS_URL', 'https://www.fl.ru/rss/all.xml?subcategory=297&category=5')
+    rss_url = os.getenv('RSS_URL')
     try:
         logger.info(f"Получаем RSS-ленту с {rss_url}")
         feed = feedparser.parse(rss_url)

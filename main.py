@@ -230,6 +230,11 @@ def open_tasks_file():
 def create_gui():
     config = load_config()
 
+    def enable_shortcuts(widget):
+        widget.bind("<Control-c>", lambda e: widget.event_generate("<<Copy>>"))
+        widget.bind("<Control-x>", lambda e: widget.event_generate("<<Cut>>"))
+        widget.bind("<Control-v>", lambda e: widget.event_generate("<<Paste>>"))
+
     root = tk.Tk()
     root.title("FL Parser GUI")
     root.configure(bg=BG_MAIN)
@@ -247,30 +252,35 @@ def create_gui():
     token_entry = tk.Entry(config_frame, width=50)
     token_entry.insert(0, config.get('TOKEN', ''))
     token_entry.grid(row=0, column=1, padx=5, pady=5)
+    enable_shortcuts(token_entry)
     CreateToolTip(token_entry, "Введите токен вашего Telegram-бота.")
 
     tk.Label(config_frame, text="TELEGRAM_CHAT_ID:", bg=BG_FRAME).grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
     chat_entry = tk.Entry(config_frame, width=50)
     chat_entry.insert(0, config.get('TELEGRAM_CHAT_ID', ''))
     chat_entry.grid(row=1, column=1, padx=5, pady=5)
+    enable_shortcuts(chat_entry)
     CreateToolTip(chat_entry, "Введите ID чата для отправки сообщений.")
 
     tk.Label(config_frame, text="Фильтр задачи:", bg=BG_FRAME).grid(row=2, column=0, sticky=tk.W, padx=5, pady=5)
     filter_entry = tk.Entry(config_frame, width=50)
     filter_entry.insert(0, config.get('TASK_FILTER', 'Скрипт'))
     filter_entry.grid(row=2, column=1, padx=5, pady=5)
+    enable_shortcuts(filter_entry)
     CreateToolTip(filter_entry, "Введите фильтр для отбора задач (например, 'Скрипт').")
 
     tk.Label(config_frame, text="RSS URL:", bg=BG_FRAME).grid(row=3, column=0, sticky=tk.W, padx=5, pady=5)
     rss_entry = tk.Entry(config_frame, width=50)
-    rss_entry.insert(0, config.get('RSS_URL', 'https://www.fl.ru/rss/all.xml?subcategory=297&category=5'))
+    rss_entry.insert(0, config.get('RSS_URL'))
     rss_entry.grid(row=3, column=1, padx=5, pady=5)
+    enable_shortcuts(rss_entry)
     CreateToolTip(rss_entry, "Введите URL RSS-ленты.")
 
     tk.Label(config_frame, text="Период (мин):", bg=BG_FRAME).grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
     period_entry = tk.Entry(config_frame, width=50)
     period_entry.insert(0, config.get('PERIOD', '1'))
     period_entry.grid(row=4, column=1, padx=5, pady=5)
+    enable_shortcuts(period_entry)
     CreateToolTip(period_entry, "Введите интервал обновления в минутах.")
 
     tk.Label(config_frame, text="Уровень логирования:", bg=BG_FRAME).grid(row=5, column=0, sticky=tk.W, padx=5, pady=5)
@@ -279,6 +289,7 @@ def create_gui():
     log_level_menu = tk.OptionMenu(config_frame, selected_level, *log_levels)
     log_level_menu.config(width=20)
     log_level_menu.grid(row=5, column=1, padx=5, pady=5, sticky=tk.W)
+    enable_shortcuts(token_entry)
     CreateToolTip(log_level_menu, "Выберите уровень логирования.")
 
     enable_file_logging = tk.BooleanVar(value=(config.get('ENABLE_FILE_LOGGING', '1') == '1'))
@@ -344,7 +355,7 @@ def create_gui():
 
     # Обработчик изменения фильтра
     def on_filter_change(event):
-        global current_filter
+        global current_filter, enable_shortcuts
         current_filter = sanitize_input(filter_entry.get())
         logger.debug(f"Фильтр изменён: '{current_filter}'")
 
