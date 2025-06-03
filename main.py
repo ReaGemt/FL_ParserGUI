@@ -16,8 +16,6 @@ from gui_decorations import (
 )
 import webbrowser  # для открытия ссылок
 import sys
-
-# Устанавливаем рабочую директорию рядом с .exe
 if getattr(sys, 'frozen', False):
     os.chdir(os.path.dirname(sys.executable))
 else:
@@ -27,7 +25,7 @@ current_filter = ""  # Глобальная переменная для дина
 restart_now_event = threading.Event()  # Новое событие для немедленного запуска
 
 # Загружаем переменные окружения
-ENV_FILE = '.env'
+ENV_FILE = 'dist/.env'
 load_dotenv(ENV_FILE)
 
 # Глобальные переменные для управления потоком бота
@@ -52,7 +50,7 @@ def update_logging_config(log_level, enable_file_logging):
         if isinstance(handler, logging.FileHandler):
             logger.removeHandler(handler)
     if enable_file_logging:
-        file_handler = logging.handlers.RotatingFileHandler("app.log", maxBytes=5 * 1024 * 1024, backupCount=3,
+        file_handler = logging.handlers.RotatingFileHandler("dist/app.log", maxBytes=5 * 1024 * 1024, backupCount=3,
                                                             encoding="utf-8")
         file_handler.setLevel(level)
         file_formatter = logging.Formatter('%(asctime)s, %(levelname)s, %(message)s')
@@ -94,13 +92,13 @@ def load_config():
     config = {
         'TOKEN': '',
         'TELEGRAM_CHAT_ID': '',
-        'TASK_FILTER': 'Скрипт',
-        'RSS_URL': 'https://www.fl.ru/rss/all.xml?subcategory=297&category=5',
+        'TASK_FILTER': '',
+        'RSS_URL': '',
         'PERIOD': '1',  # период по умолчанию в минутах
         'LOG_LEVEL': 'INFO',
-        'ENABLE_FILE_LOGGING': '1',
-        'ENABLE_TELEGRAM': '1',
-        'ENABLE_EXCEL': '1'
+        'ENABLE_FILE_LOGGING': '',
+        'ENABLE_TELEGRAM': '',
+        'ENABLE_EXCEL': ''
     }
     if os.path.exists(ENV_FILE):
         with open(ENV_FILE, 'r', encoding='utf-8') as f:
