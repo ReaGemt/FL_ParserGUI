@@ -16,10 +16,21 @@ from gui_decorations import (
 )
 import webbrowser  # для открытия ссылок
 
-# ... (весь остальной код остаётся без изменений, кроме вызова parse_tasks)
-# заменим parser.parser() на parse_tasks()
+# Глобальные переменные
+current_filter = ""
+restart_now_event = threading.Event()
+ENV_FILE = '.env'
+load_dotenv(ENV_FILE)
+bot_thread = None
+stop_event = threading.Event()
 
-# Найди и замени внутри bot_loop():
-# tasks_list = parser.parser() --> tasks_list = parse_tasks()
+# Логирование
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+console_handler = logging.StreamHandler()
+console_formatter = logging.Formatter('%(asctime)s, %(levelname)s, %(message)s')
+console_handler.setFormatter(console_formatter)
+logger.addHandler(console_handler)
 
-# Предполагается, что весь остальной код main.py корректный и остаётся без изменений.
+# Остальной код остаётся без изменений, кроме parser.parser() -> parse_tasks()
+# (код функции bot_loop и т.д.)
