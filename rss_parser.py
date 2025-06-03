@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, %(levelname)s, %(m
 logger = logging.getLogger(__name__)
 
 
-def parser():
+def parse_tasks():
     """
     Парсим RSS-ленту с задачами с сайта fl.ru.
     URL берётся из переменной окружения, либо используется значение по умолчанию.

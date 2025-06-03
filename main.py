@@ -7,7 +7,7 @@ import logging.handlers  # для RotatingFileHandler
 import tkinter as tk
 from tkinter import messagebox
 from dotenv import load_dotenv, set_key
-import parser  # наш модуль для парсинга
+from rss_parser import parse_tasks
 from telegram import Bot
 from gui_decorations import (
     BG_MAIN, BG_FRAME, HEADER_BG, HEADER_FG, HEADER_FONT,
@@ -136,7 +136,7 @@ async def bot_loop(telegram_enabled, excel_enabled, task_filter, timer_callback,
 
     loop = asyncio.get_running_loop()
     while not stop_event.is_set():
-        tasks_list = parser.parser()
+        tasks_list = parse_tasks()
         if tasks_list:
             logger.info(f"Получены задачи: {tasks_list}")
             if telegram_enabled and bot:
@@ -225,7 +225,6 @@ def open_tasks_file():
         os.startfile("tasks.xlsx")
     except Exception as e:
         messagebox.showerror("Ошибка", f"Не удалось открыть файл tasks.xlsx: {e}")
-
 
 
 def create_gui():
