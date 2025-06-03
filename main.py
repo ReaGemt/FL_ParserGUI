@@ -15,6 +15,13 @@ from gui_decorations import (
     LABEL_FONT, CreateToolTip
 )
 import webbrowser  # для открытия ссылок
+import sys
+
+# Устанавливаем рабочую директорию рядом с .exe
+if getattr(sys, 'frozen', False):
+    os.chdir(os.path.dirname(sys.executable))
+else:
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 current_filter = ""  # Глобальная переменная для динамического фильтра
 restart_now_event = threading.Event()  # Новое событие для немедленного запуска
