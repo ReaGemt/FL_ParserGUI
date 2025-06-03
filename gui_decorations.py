@@ -1,20 +1,22 @@
 import tkinter as tk
 
-# Константы оформления
-BG_MAIN = "#f0f0f0"
-BG_FRAME = "#e0e0e0"
-HEADER_BG = BG_MAIN
-HEADER_FG = "#333333"
-HEADER_FONT = ("Helvetica", 16, "bold")
-BUTTON_BG_SAVE = "#d9d9d9"
-BUTTON_BG_START = "#a6e22e"
-BUTTON_BG_STOP = "#f92672"
-BUTTON_BG_UPDATE = "#d9d9d9"
-LABEL_FONT = ("Helvetica", 10)
-TOOLTIP_BG = "#ffffe0"
-TOOLTIP_FONT = ("tahoma", "8", "normal")
+# Обновлённые стили оформления
+BG_MAIN = "#ffffff"
+BG_FRAME = "#f7f7f7"
+HEADER_BG = "#282c34"
+HEADER_FG = "#61dafb"
+HEADER_FONT = ("Segoe UI", 18, "bold")
 
-# Класс для создания всплывающих подсказок
+BUTTON_BG_SAVE = "#61dafb"
+BUTTON_BG_START = "#28a745"
+BUTTON_BG_STOP = "#dc3545"
+BUTTON_BG_UPDATE = "#ffc107"
+
+LABEL_FONT = ("Segoe UI", 10)
+TOOLTIP_BG = "#ffffcc"
+TOOLTIP_FONT = ("Segoe UI", 9)
+
+
 class CreateToolTip(object):
     """
     Создаёт всплывающую подсказку для заданного виджета.
