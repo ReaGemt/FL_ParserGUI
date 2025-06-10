@@ -232,6 +232,14 @@ def open_tasks_file():
         messagebox.showerror("Ошибка", f"Не удалось открыть файл tasks.xlsx: {e}")
 
 
+def open_log_file():
+    """Открывает файл app.log с помощью стандартного приложения."""
+    try:
+        os.startfile("dist/app.log")
+    except Exception as e:
+        messagebox.showerror("Ошибка", f"Не удалось открыть файл app.log: {e}")
+
+
 def create_gui():
     config = load_config()
 
@@ -342,6 +350,18 @@ def create_gui():
         period_val = sanitize_input(period_entry.get())
         log_level = selected_level.get()
         file_logging = enable_file_logging.get()
+        if not token_val or not chat_id or not rss_url:
+            messagebox.showwarning(
+                "Недостаточно данных",
+                "Поля TOKEN, TELEGRAM_CHAT_ID и RSS URL должны быть заполнены",
+            )
+            return
+        if not period_val.isdigit():
+            messagebox.showwarning(
+                "Неверный период",
+                "Значение периода должно быть числом в минутах",
+            )
+            return
         save_config(token_val, chat_id, task_filter_val, rss_url, period_val, log_level, file_logging,
                     enable_telegram.get(), enable_excel.get())
         os.environ['TOKEN'] = token_val
@@ -437,6 +457,13 @@ def create_gui():
     tasks_button = tk.Button(extra_frame, text="Открыть tasks.xlsx", command=on_open_tasks, bg="#fd971f")
     tasks_button.grid(row=0, column=1, padx=5)
     CreateToolTip(tasks_button, "Открыть файл tasks.xlsx в стандартном приложении.")
+
+    def on_open_log():
+        open_log_file()
+
+    log_button = tk.Button(extra_frame, text="Открыть log-файл", command=on_open_log, bg="#f0ad4e")
+    log_button.grid(row=0, column=2, padx=5)
+    CreateToolTip(log_button, "Открыть файл app.log в стандартном приложении.")
 
     root.mainloop()
 
